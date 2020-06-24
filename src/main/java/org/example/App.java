@@ -1,9 +1,81 @@
 package org.example;
 
-public class App 
+import java.util.Arrays;
+
+public class App
 {
+    /*
+        1: We manage the names array
+        2: Only Unique names in the array
+        3: Add and remove names
+        4: Sort the array
+        5: Find by name
+
+        Test that we follow the rules above!
+     */
+    private static String[] names = new String[0];
+
     public static void main( String[] args )
     {
-        
+
+    }
+
+    public static boolean addName(String name) {
+
+        if (isNewName(name)) {
+            names = incressArraySize(names);
+            names[names.length - 1] = name;
+            sortNames();
+
+            return true;
+        }
+
+        return false;
+    }
+    //overload
+    // 1: method name must be the same
+    // 2: input type(s) must be different (amount and/or order)
+    public static boolean[] addName(String[] namesToAdd) {
+
+        boolean[] wasAdded = new boolean[namesToAdd.length];
+
+        for (int i = 0; i < namesToAdd.length ; i++) {
+            wasAdded[i] = addName(namesToAdd[i]);
+        }
+        return wasAdded;
+    }
+
+    //---- Utils Methods ----
+
+    private static boolean isNewName(String name) {
+
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].equals(name)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static void sortNames() {
+        int i = 0;
+        Arrays.sort(names);
+    }
+
+    private static String[] incressArraySize(String[] smallArray) {
+        return Arrays.copyOf(smallArray, smallArray.length + 1);
+    }
+
+    //---- Getters & Setters ----
+
+    public static String[] getNames() {
+        return Arrays.copyOf(names, names.length);
+    }
+
+    //---- Reset Method ----
+
+    static void resetNames() {
+        names = new String[0];
     }
 }
