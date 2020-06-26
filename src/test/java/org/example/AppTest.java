@@ -11,11 +11,11 @@ import static org.junit.Assert.*;
 public class AppTest 
 {
     /*
-        1: We manage the names array
+        1: We(App) manage the names array
         2: Only Unique names in the array
         3: Add and remove names
         4: Sort the array
-        5: Find by name
+        5: Find by name and return index from list
 
         Test that we follow the rules above!
      */
@@ -143,5 +143,82 @@ public class AppTest
         assertEquals(testName2, namesResult[1]);
     }
 
+    @Test
+    public void findByNameTrue() {
+        //Arrange
+        String name = "Ulf";
+        App.addName(name);
 
+        //Act
+        int result = App.findByName(name);
+
+        //Assert
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void findByNameFalse() {
+        //Arrange
+        String name = "Ulf";
+
+        //Act
+        int result = App.findByName(name);
+
+        //Assert
+        assertEquals(-1, result);
+    }
+
+    @Test
+    public void findByNameSmallLetters() {
+        //Arrange
+        String name = "Ulf";
+        String noneCapitalName = "ulf";
+        App.addName(name);
+
+        //Act
+        int result = App.findByName(noneCapitalName);
+
+        //Assert
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void findByNameWithinManyNames() {
+        //Arrange
+        String[] names = new String[] { "Erik", "Jonas", "Kent", "Simon", "Ulf"};
+        String noneCapitalName = "kent";
+        App.addName(names);
+
+        //Act
+        int result = App.findByName(noneCapitalName);
+
+        //Assert
+        assertEquals(2, result);
+    }
+
+    @Test
+    public void removeAName() {
+        //Arrange
+        String[] names = new String[] { "Erik", "Jonas", "Kent", "Simon", "Ulf"};
+        String noneCapitalName = "kent";
+        App.addName(names);
+
+        //Act
+        boolean result = App.removeName(noneCapitalName);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void NoNamesTryRemoveOne() {
+        //Arrange
+        String name = "kent";
+
+        //Act
+        boolean result = App.removeName(name);
+
+        //Assert
+        assertFalse(result);
+    }
 }
